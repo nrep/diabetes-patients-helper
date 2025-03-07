@@ -17,7 +17,7 @@ class DiseaseResource extends Resource
 {
     protected static ?string $model = Disease::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-s-arrow-left-end-on-rectangle';
 
     public static function form(Form $form): Form
     {

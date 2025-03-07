@@ -17,7 +17,7 @@ class DietaryPlanResource extends Resource
 {
     protected static ?string $model = DietaryPlan::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-s-scale';
 
     public static function form(Form $form): Form
     {
