@@ -6,6 +6,7 @@ use App\Filament\Resources\DiseaseResource\Pages;
 use App\Filament\Resources\DiseaseResource\RelationManagers;
 use App\Models\Disease;
 use Filament\Forms;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -25,11 +26,13 @@ class DiseaseResource extends Resource
             ->schema([
                 Forms\Components\TextInput::make('name')
                     ->required()
+                    ->placeholder('Enter the name of the disease')
                     ->maxLength(255),
-                Forms\Components\TextInput::make('symptoms')
+                Textarea::make('symptoms')
                     ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('description')
+                    ->placeholder('Enter the symptoms of the disease'),
+                Textarea::make('description')
+                    ->placeholder('Enter the description of the disease')
                     ->required()
                     ->maxLength(255),
             ]);

@@ -6,6 +6,7 @@ use App\Filament\Resources\HealthIndicatorResource\Pages;
 use App\Filament\Resources\HealthIndicatorResource\RelationManagers;
 use App\Models\HealthIndicator;
 use Filament\Forms;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -17,15 +18,14 @@ class HealthIndicatorResource extends Resource
 {
     protected static ?string $model = HealthIndicator::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-s-user-minus';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('patient_id')
-                    ->required()
-                    ->numeric(),
+                Select::make('patient_id')
+                ->relationship('patient', 'name'),
                 Forms\Components\TextInput::make('blood_sugar')
                     ->numeric()
                     ->default(null),

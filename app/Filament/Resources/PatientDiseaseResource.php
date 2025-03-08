@@ -6,6 +6,8 @@ use App\Filament\Resources\PatientDiseaseResource\Pages;
 use App\Filament\Resources\PatientDiseaseResource\RelationManagers;
 use App\Models\PatientDisease;
 use Filament\Forms;
+use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -17,20 +19,20 @@ class PatientDiseaseResource extends Resource
 {
     protected static ?string $model = PatientDisease::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-s-user-group';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('patient_id')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('disease_id')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('diagnosed_at')
-                    ->maxLength(255)
+                Select::make('patient_id')
+                    ->relationship('patient', 'name'),
+
+                Select::make('disease_id')
+                    ->relationship('desease', 'name'),
+
+                DatePicker::make('diagnosed_at')
+                    ->maxDate('today')
                     ->default(null),
                 Forms\Components\Textarea::make('notes')
                     ->columnSpanFull(),

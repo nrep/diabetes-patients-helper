@@ -6,6 +6,9 @@ use App\Filament\Resources\PatientResource\Pages;
 use App\Filament\Resources\PatientResource\RelationManagers;
 use App\Models\Patient;
 use Filament\Forms;
+use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Wizard;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -17,12 +20,18 @@ class PatientResource extends Resource
 {
     protected static ?string $model = Patient::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-s-users';
 
     public static function form(Form $form): Form
     {
         return $form
+        ->columns(1)
             ->schema([
+                Wizard::make([
+                    Wizard\Step::make('Property Details')
+                        ->columns(2)
+                        ->icon('heroicon-s-book-open')
+                        ->schema([
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
@@ -31,14 +40,18 @@ class PatientResource extends Resource
                     ->maxLength(255),
                 Forms\Components\TextInput::make('phone')
                     ->tel()
-                    ->maxLength(255)
+                    ->numeric()
+                    ->maxLength(10)
                     ->default(null),
-                Forms\Components\TextInput::make('age')
+                DatePicker::make('age')
                     ->required()
-                    ->numeric(),
-                Forms\Components\TextInput::make('gender')
-                    ->required()
-                    ->maxLength(255),
+                    ->maxDate('today'),
+                    
+                Select::make('gender')
+                ->options([
+                    'M' => 'Male',
+                    'F' => 'Female'
+                ]),
                 Forms\Components\TextInput::make('username')
                     ->required()
                     ->maxLength(255),
@@ -50,6 +63,9 @@ class PatientResource extends Resource
                     ->password()
                     ->required()
                     ->maxLength(255),
+            ])
+                ])
+
             ]);
     }
 
