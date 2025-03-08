@@ -28,4 +28,8 @@ class Patient extends Model
         return $this->hasMany(PatientDisease :: class, 'patient_id');
     }
 
+    public function disease(){
+        return $this->belongsTo(Disease::class);
+    }
+
 }

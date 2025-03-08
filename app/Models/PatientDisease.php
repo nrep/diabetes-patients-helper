@@ -20,7 +20,7 @@ class PatientDisease extends Model
     public function patient(){
         return $this->belongsTo(Patient::class);
     }
-    public function desease(){
+    public function disease(){
         return $this->belongsTo(Disease::class);
     }
 }

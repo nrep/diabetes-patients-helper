@@ -28,17 +28,20 @@ class PatientResource extends Resource
         ->columns(1)
             ->schema([
                 Wizard::make([
-                    Wizard\Step::make('Property Details')
+                    Wizard\Step::make('Patient Information')
                         ->columns(2)
-                        ->icon('heroicon-s-book-open')
+                        ->icon('heroicon-s-user')
                         ->schema([
                 Forms\Components\TextInput::make('name')
                     ->required()
+                    ->placeholder('Enter the name of the patient')
                     ->maxLength(255),
                 Forms\Components\TextInput::make('address')
                     ->required()
+                    ->placeholder('Enter the address of the patient')
                     ->maxLength(255),
                 Forms\Components\TextInput::make('phone')
+                ->placeholder('Enter 10 digit phone number')
                     ->tel()
                     ->numeric()
                     ->maxLength(10)
@@ -54,16 +57,37 @@ class PatientResource extends Resource
                 ]),
                 Forms\Components\TextInput::make('username')
                     ->required()
+                    ->placeholder('Enter the username')
                     ->maxLength(255),
                 Forms\Components\TextInput::make('email')
+                ->placeholder('Enter the email address')
                     ->email()
                     ->maxLength(255)
                     ->default(null),
                 Forms\Components\TextInput::make('password')
                     ->password()
+                    ->placeholder('Enter the password')
                     ->required()
                     ->maxLength(255),
-            ])
+            ]),
+            Wizard\Step::make('Desease Information')
+            ->columns(2)            
+            ->icon('heroicon-s-adjustments-horizontal')
+            ->schema([
+
+                Select::make('disease_id')
+                ->options(\App\Models\Disease::pluck('name', 'id')->toArray())
+                    ->required(),
+
+                DatePicker::make('diagnosed_at')
+                    ->maxDate('today')
+                    ->default(null),
+                Forms\Components\Textarea::make('notes')
+                    ->columnSpanFull(),
+
+                
+            ]),
+
                 ])
 
             ]);

@@ -29,7 +29,7 @@ class PatientDiseaseResource extends Resource
                     ->relationship('patient', 'name'),
 
                 Select::make('disease_id')
-                    ->relationship('desease', 'name'),
+                    ->relationship('disease', 'name'),
 
                 DatePicker::make('diagnosed_at')
                     ->maxDate('today')
@@ -43,9 +43,9 @@ class PatientDiseaseResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('patient_id')
+                Tables\Columns\TextColumn::make('patient.name')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('disease_id')
+                Tables\Columns\TextColumn::make('disease.name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('diagnosed_at')
                     ->searchable(),
