@@ -1,59 +1,292 @@
+# Diabetes Management System (Doctor & Patient)
 
+## Overview
 
-## About the app
+The **Diabetes Management System** is a web and mobile application designed to bridge the gap between doctors and patients with diabetes by enabling real-time health monitoring and data sharing. The system collects and analyzes key health indicators such as blood sugar levels, HbA1C, weight, vital signs, and dietary habits recommended by doctors, ensuring accurate insights into a patient's progress and treatment effectiveness.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+### **Tech Stack**
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- **Backend**: Laravel Filament (for doctor's dashboard)
+- **Mobile App**: React Native (for patient-side application)
+- **Database**: MySQL
+- **Authentication**: Laravel Sanctum
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Features
 
-## Learning Laravel
+### **Doctor's Dashboard (Laravel Filament)**
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- Manage patient records
+- Track health indicators
+- Assign dietary plans
+- View historical health data
+- Send notifications to patients
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### **Patient Mobile App (React Native)**
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- Log health indicators
+- Receive treatment recommendations
+- Track medication and dietary plans
+- View notifications from doctors
 
-## Laravel Sponsors
+---
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+## **API Documentation**
 
-### Premium Partners
+The following API endpoints allow interaction with the system
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+### **Authentication**
 
-## Contributing
+#### **Register a New User**
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```http
+POST /api/register
+```
 
-## Code of Conduct
+**Request Body:**
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```json
+{
+  "name": "John Doe",
+  "email": "johndoe@example.com",
+  "password": "password123",
+  "role": "patient"
+}
+```
 
-## Security Vulnerabilities
+**Response:**
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```json
+{
+  "message": "User registered successfully",
+  "token": "generated_token"
+}
+```
+
+#### **Login**
+
+```http
+POST /api/login
+```
+
+**Request Body:**
+
+```json
+{
+  "email": "johndoe@example.com",
+  "password": "password123"
+}
+```
+
+**Response:**
+
+```json
+{
+  "message": "Login successful",
+  "token": "generated_token"
+}
+```
+
+---
+
+### **Patient Management**
+
+#### **Get All Patients**
+
+```http
+GET /api/patients
+```
+
+**Response:**
+
+```json
+[
+  {
+    "id": 1,
+    "name": "John Doe",
+    "email": "johndoe@example.com",
+    "age": 45,
+    "gender": "male"
+  }
+]
+```
+
+#### **Get a Single Patient**
+
+```http
+GET /api/patients/{id}
+```
+
+---
+
+### **Disease Management**
+
+#### **Get All Diseases**
+
+```http
+GET /api/diseases
+```
+
+**Response:**
+
+```json
+[
+  {
+    "id": 1,
+    "name": "Diabetes",
+    "description": "A chronic condition affecting blood sugar levels."
+  }
+]
+```
+
+#### **Assign Disease to Patient**
+
+```http
+POST /api/patients/{id}/diseases
+```
+
+**Request Body:**
+
+```json
+{
+  "disease_id": 1,
+  "diagnosed_at": "2025-03-08"
+}
+```
+
+**Response:**
+
+```json
+{
+  "message": "Disease assigned to patient successfully"
+}
+```
+
+---
+
+### **Health Indicators**
+
+#### **Submit Health Indicators**
+
+```http
+POST /api/patients/{id}/health-indicators
+```
+
+**Request Body:**
+
+```json
+{
+  "blood_sugar": 120,
+  "hba1c": 6.5,
+  "weight": 75,
+  "vital_signs": {
+    "heart_rate": 72,
+    "blood_pressure": "120/80"
+  },
+  "date": "2025-03-08"
+}
+```
+
+**Response:**
+
+```json
+{
+  "message": "Health indicators recorded successfully"
+}
+```
+
+#### **Get Patient's Health Records**
+
+```http
+GET /api/patients/{id}/health-indicators
+```
+
+---
+
+### **Notifications**
+
+#### **Send Notification to Patient**
+
+```http
+POST /api/notifications
+```
+
+**Request Body:**
+
+```json
+{
+  "user_id": 1,
+  "title": "Check-up Reminder",
+  "message": "Please schedule your next check-up."
+}
+```
+
+**Response:**
+
+```json
+{
+  "message": "Notification sent successfully"
+}
+```
+
+#### **Get Patient Notifications**
+
+```http
+GET /api/patients/{id}/notifications
+```
+
+---
+
+## Installation & Setup
+
+### **Backend (Laravel Filament)**
+
+1. Clone the repository:
+   ```sh
+   git clone https://github.com/your-repo/diabetes-management.git
+   cd diabetes-management
+   ```
+2. Install dependencies:
+   ```sh
+   composer install
+   ```
+3. Set up the environment:
+   ```sh
+   cp .env.example .env
+   php artisan key:generate
+   ```
+4. Configure the database in `.env` and run migrations:
+   ```sh
+   php artisan migrate --seed
+   ```
+5. Start the server:
+   ```sh
+   php artisan serve
+   ```
+
+### **Mobile App (React Native)**
+
+1. Navigate to the mobile folder:
+   ```sh
+   cd mobile-app
+   ```
+2. Install dependencies:
+   ```sh
+   npm install
+   ```
+3. Run the application:
+   ```sh
+   npm start
+   ```
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+This project is licensed under the MIT License.
+
+---
+
+### Need help?
+
+Feel free to reach out for any inquiries or contributions!
+
+🚀 Happy Coding!
+

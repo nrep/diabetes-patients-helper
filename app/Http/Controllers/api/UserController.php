@@ -34,4 +34,19 @@ class UserController extends Controller
 
 
     }
+
+    public function Register(Request $request) //saving new user 
+    {
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make(uniqid()),
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'User created',
+            'user' => $user,
+        ]);
+    }
 }

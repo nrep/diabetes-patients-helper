@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\api\DiseaseController;
 use App\Http\Controllers\api\PatientController;
+use App\Http\Controllers\api\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -23,6 +24,10 @@ Route::get('/diseases', [DiseaseController::class, 'index']);
 Route::get('/patients', [PatientController::class, 'patients']);
 Route::get('/patient', [PatientController::class, 'patient']);
 Route::get('/patientdisease', [PatientController::class, 'PatientDisease']);
+Route::post('/login', [UserController::class, 'Login']);
+Route::post('/register', [UserController::class, 'Register']);
+
+
 
 
 
