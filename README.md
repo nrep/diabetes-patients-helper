@@ -4,6 +4,7 @@
 
 The **Diabetes Management System** is a web and mobile application designed to bridge the gap between doctors and patients with diabetes by enabling real-time health monitoring and data sharing. The system collects and analyzes key health indicators such as blood sugar levels, HbA1C, weight, vital signs, and dietary habits recommended by doctors, ensuring accurate insights into a patient's progress and treatment effectiveness.
 
+
 ### **Tech Stack**
 
 - **Backend**: Laravel Filament (for doctor's dashboard)
@@ -34,22 +35,33 @@ The **Diabetes Management System** is a web and mobile application designed to b
 
 The following API endpoints allow interaction with the system
 
+### **Headers**
+
+Content-Type: application/x-www-form-urlencoded; charset=UTF-8
+
+### **Notice**
+
+
 ### **Authentication**
 
 #### **Register a New User**
 
 ```http
-POST /api/register
+POST  /api/register
 ```
 
 **Request Body:**
 
 ```json
 {
-  "name": "John Doe",
-  "email": "johndoe@example.com",
-  "password": "password123",
-  "role": "patient"
+  "name":"",
+  "address" :"",
+  "email":"",
+  "phone":"",
+  "age" :"",
+  "gender" :"",
+  "username":"",
+  "password":""
 }
 ```
 
@@ -57,15 +69,17 @@ POST /api/register
 
 ```json
 {
-  "message": "User registered successfully",
-  "token": "generated_token"
+  "message": "User authenticated",
+  "token": "generated_token",
+
 }
 ```
 
 #### **Login**
 
 ```http
-POST /api/login
+POST  /api/login
+
 ```
 
 **Request Body:**
@@ -74,6 +88,7 @@ POST /api/login
 {
   "email": "johndoe@example.com",
   "password": "password123"
+
 }
 ```
 
@@ -81,8 +96,10 @@ POST /api/login
 
 ```json
 {
-  "message": "Login successful",
-  "token": "generated_token"
+  "message": "User authenticated",
+  "token": "generated_token",
+  "user" : "User information",
+  "userid": "Logged in user id",
 }
 ```
 
@@ -93,7 +110,7 @@ POST /api/login
 #### **Get All Patients**
 
 ```http
-GET /api/patients
+GET  /api/patients
 ```
 
 **Response:**
@@ -102,10 +119,13 @@ GET /api/patients
 [
   {
     "id": 1,
-    "name": "John Doe",
-    "email": "johndoe@example.com",
-    "age": 45,
-    "gender": "male"
+    "name": "",
+    "email": "",
+    "age": "",
+    "gender": "",
+    "address": "",
+    "phone" : "",
+    "username" : ""
   }
 ]
 ```
@@ -113,12 +133,24 @@ GET /api/patients
 #### **Get a Single Patient**
 
 ```http
-GET /api/patients/{id}
+GET /api/patient/{id}
 ```
-
+```json
+[
+  {
+    "id": 1,
+    "name": "",
+    "email": "",
+    "age": "",
+    "gender": "",
+    "address": "",
+    "phone" : "",
+    "username" : ""
+  }
+]
 ---
-
-### **Disease Management**
+```
+#### **Disease Management**
 
 #### **Get All Diseases**
 
@@ -132,8 +164,9 @@ GET /api/diseases
 [
   {
     "id": 1,
-    "name": "Diabetes",
-    "description": "A chronic condition affecting blood sugar levels."
+    "name": "",
+    "symptoms" : "",
+    "description": ""
   }
 ]
 ```
@@ -141,15 +174,17 @@ GET /api/diseases
 #### **Assign Disease to Patient**
 
 ```http
-POST /api/patients/{id}/diseases
+POST /api/savepatientdisease
 ```
 
 **Request Body:**
 
 ```json
 {
-  "disease_id": 1,
-  "diagnosed_at": "2025-03-08"
+  "disease_id": "",
+  "patient_id": "",  
+  "diagnosed_at": "",
+  "notes": " "
 }
 ```
 
@@ -160,29 +195,57 @@ POST /api/patients/{id}/diseases
   "message": "Disease assigned to patient successfully"
 }
 ```
+#### **Dietary plans Management**
 
+#### **Get patient's Dietary Plan**
+
+```http
+GET /api/getdietaryplan
+```
+**Request Body:**
+
+```json
+{
+  "patient_id": "",
+  
+
+}
+```
+
+**Response:**
+
+```json
+[
+  {
+    "plan": 1,
+    "start_date": "",
+    "end_date" : "",
+    "description": ""
+  }
+]
 ---
+```
 
 ### **Health Indicators**
 
-#### **Submit Health Indicators**
+#### **Save Health Indicators**
 
 ```http
-POST /api/patients/{id}/health-indicators
+POST /api/savehealthindicator
 ```
 
 **Request Body:**
 
 ```json
 {
-  "blood_sugar": 120,
-  "hba1c": 6.5,
-  "weight": 75,
-  "vital_signs": {
-    "heart_rate": 72,
-    "blood_pressure": "120/80"
-  },
-  "date": "2025-03-08"
+  "patient_id": "",
+  "hba1c": "",
+  "weight": "",
+  "blood_sugar": "",
+ "oxygen" : "",
+ "tension" : "",
+ "description": "",
+  "dates": ""
 }
 ```
 
@@ -194,10 +257,10 @@ POST /api/patients/{id}/health-indicators
 }
 ```
 
-#### **Get Patient's Health Records**
+#### **Get Patient's Health Indicators**
 
 ```http
-GET /api/patients/{id}/health-indicators
+GET /api/gethealthindicator
 ```
 
 ---
@@ -207,16 +270,15 @@ GET /api/patients/{id}/health-indicators
 #### **Send Notification to Patient**
 
 ```http
-POST /api/notifications
+GET /api/getnotifications
 ```
 
 **Request Body:**
 
 ```json
 {
-  "user_id": 1,
-  "title": "Check-up Reminder",
-  "message": "Please schedule your next check-up."
+  "patient_id": "",
+  
 }
 ```
 
@@ -224,27 +286,16 @@ POST /api/notifications
 
 ```json
 {
-  "message": "Notification sent successfully"
+  "notifications": ""
 }
 ```
 
-#### **Get Patient Notifications**
 
-```http
-GET /api/patients/{id}/notifications
-```
-
----
 
 ## Installation & Setup
 
-### **Backend (Laravel Filament)**
+1. Clone the repository
 
-1. Clone the repository:
-   ```sh
-   git clone https://github.com/your-repo/diabetes-management.git
-   cd diabetes-management
-   ```
 2. Install dependencies:
    ```sh
    composer install
@@ -263,30 +314,14 @@ GET /api/patients/{id}/notifications
    php artisan serve
    ```
 
-### **Mobile App (React Native)**
 
-1. Navigate to the mobile folder:
-   ```sh
-   cd mobile-app
-   ```
-2. Install dependencies:
-   ```sh
-   npm install
-   ```
-3. Run the application:
-   ```sh
-   npm start
    ```
 
-## License
 
-This project is licensed under the MIT License.
-
----
 
 ### Need help?
 
-Feel free to reach out for any inquiries or contributions!
+Feel free to reach out for any inquiries or contributions! x
 
 🚀 Happy Coding!
 

@@ -12,4 +12,19 @@ class DiseaseController extends Controller
     {
         return Disease::All();
     }
+    public function SaveDisease(Request $request) //save disease
+    {
+        $disease = Disease::create([
+            'name' => $request->name,
+            'symptoms' => $request->symptoms,
+            'description' => $request->description,
+        ]);
+        return response()->json([
+            'success' => true,
+            'message' => 'disease saved',
+            'disease' => $disease,
+        ]);
+
+    }
+    
 }
