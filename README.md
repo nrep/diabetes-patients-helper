@@ -1,4 +1,4 @@
-# Diabetes Management System (Doctor & Patient)
+# Diabetes Management System (Doctor ) 
 
 ## Overview
 
@@ -86,8 +86,8 @@ POST  /api/login
 
 ```json
 {
-  "email": "johndoe@example.com",
-  "password": "password123"
+  "email": "",
+  "password": ""
 
 }
 ```
